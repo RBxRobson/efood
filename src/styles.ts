@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
-const colors = {
+export const colors = {
   bg_color: '#FFF8F2',
   hf_color: '#FFEBD9',
   txt_home_color: '#E66767',
@@ -19,4 +19,10 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${colors.bg_color};
     color: ${colors.txt_home_color};
   }
+`
+
+export const Container = styled.div`
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
 `
