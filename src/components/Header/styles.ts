@@ -13,11 +13,6 @@ export const Header = styled.header`
   img {
     width: 125px;
   }
-
-  h1 {
-    font-size: 36px;
-    text-align: center;
-  }
 `
 
 export const HeaderContainer = styled(Container)`
@@ -25,4 +20,10 @@ export const HeaderContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   gap: 136px;
+
+  h1 {
+    font-size: 36px;
+    text-align: center;
+    max-width: 540px;
+  }
 `
