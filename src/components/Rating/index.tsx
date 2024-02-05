@@ -1,7 +1,7 @@
 import { RatingContainer } from './styles'
 import star from '../../assets/images/estrela.svg'
 
-export type Props = {
+type Props = {
   children: string
 }
 
