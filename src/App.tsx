@@ -2,6 +2,7 @@ import Banner from './components/Banner'
 import CardList from './components/CardList'
 import Card from './models/Card'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import { GlobalStyles } from './styles'
 
 import restaurante from './assets/images/hioki_sushi.png'
@@ -51,6 +52,7 @@ function App() {
       <GlobalStyles />
       <Header />
       <CardList columns={2} cards={cards} />
+      <Footer />
     </>
   )
 }
