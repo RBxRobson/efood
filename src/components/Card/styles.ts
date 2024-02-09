@@ -34,6 +34,7 @@ export const Title = styled.div`
   align-items: center;
 `
 
+//* Usando o estilo da tag mas alterando o HTML para button
 export const Btn = styled(TagContainer).attrs({ as: 'button' })`
   padding: 4px 6px;
   border: none;
