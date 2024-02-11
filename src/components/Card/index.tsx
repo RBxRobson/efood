@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Rating from '../Rating'
 import Tag from '../Tag'
 
@@ -33,7 +34,9 @@ const Card = ({ infos, description, image, title, rating }: Props) => {
           <Rating>{rating}</Rating>
         </Title>
         <p>{description}</p>
-        <Btn>Saiba Mais</Btn>
+        <Link to="/restaurant">
+          <Btn>Saiba Mais</Btn>
+        </Link>
       </DescriptionContainer>
     </CardContainer>
   )
