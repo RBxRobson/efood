@@ -1,7 +1,7 @@
-class Game {
+class Card {
   infos: string[]
   description: string
-  rating?: string
+  rating: string
   image: string
   title: string
   id: number
@@ -23,4 +23,4 @@ class Game {
   }
 }
 
-export default Game
+export default Card
