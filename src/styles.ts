@@ -20,10 +20,10 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${colors.bg_color};
     color: ${colors.txt_home_color};
   }
-`
 
-export const Container = styled.div`
-  max-width: 1024px;
-  width: 100%;
-  margin: 0 auto;
+  .container {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+  }
 `

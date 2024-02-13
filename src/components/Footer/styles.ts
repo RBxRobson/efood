@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import { Container } from '../../styles'
 import { colors } from '../../styles'
 
 export const Footer = styled.footer`
@@ -12,7 +11,7 @@ export const Footer = styled.footer`
   }
 `
 
-export const FooterContainer = styled(Container)`
+export const FooterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

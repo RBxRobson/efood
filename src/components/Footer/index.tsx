@@ -8,7 +8,7 @@ import facebook from '../../assets/images/facebook.svg'
 const Footer = () => {
   return (
     <S.Footer>
-      <S.FooterContainer>
+      <S.FooterContainer className="container">
         <img className="logo" src={logo} alt="Efood" />
         <S.SocialLinks>
           <li>

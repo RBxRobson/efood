@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import { Container } from '../../styles'
 import { colors } from '../../styles'
 
 export const Banner = styled.div`
@@ -21,7 +20,7 @@ export const Banner = styled.div`
   }
 `
 
-export const BannerContainer = styled(Container)`
+export const BannerContainer = styled.div`
   position: relative;
   height: 280px;
   font-size: 32px;

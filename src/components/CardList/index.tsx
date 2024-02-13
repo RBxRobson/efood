@@ -1,5 +1,4 @@
 import Card from '../../models/Card'
-import { Container } from '../../styles'
 import Product from '../Card'
 import { List } from './styles'
 
@@ -10,7 +9,7 @@ export type Props = {
 
 const CardList = ({ cards, columns }: Props) => {
   return (
-    <Container>
+    <div className="container">
       <List columns={columns}>
         {cards.map((card) => (
           <Product
@@ -23,7 +22,7 @@ const CardList = ({ cards, columns }: Props) => {
           />
         ))}
       </List>
-    </Container>
+    </div>
   )
 }
 
