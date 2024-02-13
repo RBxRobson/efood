@@ -1,6 +1,5 @@
 import { TagContainer } from './styles'
 
-//* Criando uma tipagem para reutilizar o componente
 export type Props = {
   size?: 'small' | 'big'
   children: string

@@ -10,7 +10,6 @@ import {
   Title
 } from './styles'
 
-//* Criando uma tipagem para reutilizar o componente
 type Props = {
   infos: string[]
   description: string
