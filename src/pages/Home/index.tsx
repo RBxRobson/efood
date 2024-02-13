@@ -46,7 +46,7 @@ const cards: Card[] = [
 const Home = () => {
   return (
     <>
-      <Header />
+      <Header model="primary" />
       <CardList columns={2} cards={cards} />
     </>
   )

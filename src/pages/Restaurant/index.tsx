@@ -4,6 +4,8 @@ import Header from '../../components/Header'
 import Card from '../../models/Card'
 
 import restaurante from '../../assets/images/hioki_sushi.png'
+import Footer from '../../components/Footer'
+import BannerLaDolce from '../../assets/images/banner1.svg'
 
 const cards: Card[] = [
   {
@@ -47,9 +49,13 @@ const cards: Card[] = [
 const Restaurant = () => {
   return (
     <>
-      <Header />
-      <Banner />
-      <CardList columns={3} cards={cards} />
+      <Header model="secondary" />
+      <Banner
+        category="Italiana"
+        image={BannerLaDolce}
+        name="La Dolce Vita Trattoria"
+      />
+      <CardList columns={2} cards={cards} />
     </>
   )
 }
