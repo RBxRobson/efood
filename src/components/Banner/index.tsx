@@ -1,12 +1,17 @@
 import * as S from './styles'
-import bannerImg from '../../assets/images/banner1.svg'
 
-const Banner = () => {
+type Props = {
+  category: string
+  name: string
+  image: string
+}
+
+const Banner = ({ category, name, image }: Props) => {
   return (
-    <S.Banner style={{ backgroundImage: `url(${bannerImg})` }}>
-      <S.BannerContainer>
-        <p>Italiana</p>
-        <h2>La Dolce Vita Trattoria</h2>
+    <S.Banner style={{ backgroundImage: `url(${image})` }}>
+      <S.BannerContainer className="container">
+        <p>{category}</p>
+        <h2>{name}</h2>
       </S.BannerContainer>
     </S.Banner>
   )
