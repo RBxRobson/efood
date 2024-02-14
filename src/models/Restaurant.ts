@@ -1,4 +1,4 @@
-class Card {
+class Restaurant {
   infos: string[]
   description: string
   rating: string
@@ -23,4 +23,4 @@ class Card {
   }
 }
 
-export default Card
+export default Restaurant
