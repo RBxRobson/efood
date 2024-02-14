@@ -32,10 +32,19 @@ export const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  h2 {
+    font-size: 18px;
+  }
 `
 
 //* Usando o estilo da tag mas alterando o HTML para button
 export const Btn = styled(TagContainer).attrs({ as: 'button' })`
   padding: 4px 6px;
+  cursor: pointer;
   border: none;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
 `

@@ -18,7 +18,13 @@ type Props = {
   title: string
 }
 
-const Card = ({ infos, description, image, title, rating }: Props) => {
+const RestaurantCard = ({
+  infos,
+  description,
+  image,
+  title,
+  rating
+}: Props) => {
   return (
     <CardContainer>
       <img src={image} />
@@ -41,4 +47,4 @@ const Card = ({ infos, description, image, title, rating }: Props) => {
   )
 }
 
-export default Card
+export default RestaurantCard
