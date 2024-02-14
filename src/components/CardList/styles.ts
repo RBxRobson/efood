@@ -6,8 +6,8 @@ export const List = styled.ul<Omit<Props, 'cards'>>`
   display: grid;
   grid-template-columns: ${(props) =>
     props.columns === 3 ? '1fr 1fr 1fr' : '1fr 1fr'};
-  column-gap: 80px;
-  row-gap: 48px;
-  margin-top: 80px;
+  column-gap: ${(props) => (props.columns === 3 ? '40px' : '80px')};
+  row-gap: ${(props) => (props.columns === 3 ? '32px' : '48px')};
+  margin-top: ${(props) => (props.columns === 3 ? '56px' : '80px')};
   margin-bottom: 120px;
 `
