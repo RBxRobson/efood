@@ -2,13 +2,7 @@ import { Link } from 'react-router-dom'
 import Rating from '../Rating'
 import Tag from '../Tag'
 
-import {
-  Btn,
-  CardContainer,
-  DescriptionContainer,
-  Infos,
-  Title
-} from './styles'
+import * as S from './styles'
 
 type Props = {
   infos: string[]
@@ -26,24 +20,24 @@ const RestaurantCard = ({
   rating
 }: Props) => {
   return (
-    <CardContainer>
+    <S.CardContainer>
       <img src={image} />
-      <Infos>
+      <S.Infos>
         {infos.map((info) => (
           <Tag key={info}>{info}</Tag>
         ))}
-      </Infos>
-      <DescriptionContainer>
-        <Title>
+      </S.Infos>
+      <S.DescriptionContainer>
+        <S.Title>
           <h2>{title}</h2>
           <Rating>{rating}</Rating>
-        </Title>
+        </S.Title>
         <p>{description}</p>
         <Link to="/restaurant">
-          <Btn>Saiba Mais</Btn>
+          <S.Btn>Saiba Mais</S.Btn>
         </Link>
-      </DescriptionContainer>
-    </CardContainer>
+      </S.DescriptionContainer>
+    </S.CardContainer>
   )
 }
 
