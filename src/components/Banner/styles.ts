@@ -23,8 +23,8 @@ export const Banner = styled.div`
 export const BannerContainer = styled.div`
   position: relative;
   height: 280px;
-  font-size: 32px;
   color: ${colors.white_default};
+  font-size: 32px;
 
   p {
     position: absolute;
@@ -37,5 +37,6 @@ export const BannerContainer = styled.div`
     position: absolute;
     bottom: 32px;
     left: 0;
+    font-size: 32px;
   }
 `

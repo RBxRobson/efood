@@ -40,6 +40,7 @@ export const Title = styled.div`
 
 //* Usando o estilo da tag mas alterando o HTML para button
 export const Btn = styled(TagContainer).attrs({ as: 'button' })`
+  font-size: 14px;
   padding: 4px 6px;
   cursor: pointer;
   border: none;

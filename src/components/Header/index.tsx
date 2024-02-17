@@ -19,9 +19,7 @@ const Header = ({ model }: Props) => {
           <h1>Viva experiências gastronômicas no conforto da sua casa</h1>
         ) : (
           <>
-            <Link to="/">
-              <a>Restaurantes</a>
-            </Link>
+            <Link to="/">Restaurantes</Link>
             <p>0 produto(s) no carrinho</p>
           </>
         )}

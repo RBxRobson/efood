@@ -22,7 +22,7 @@ export const HeaderContainer = styled.div`
 
   //* Estilos para o modelo primário de cabeçalho
   flex-direction: column;
-  gap: 128px;
+  gap: 138px;
 
   //* Estilos para o modelo secundário de cabeçalho
   position: relative;
