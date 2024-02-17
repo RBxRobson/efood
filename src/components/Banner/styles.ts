@@ -28,7 +28,7 @@ export const BannerContainer = styled.div`
 
   p {
     position: absolute;
-    top: 32px;
+    top: 25px;
     left: 0;
     font-weight: 100;
   }
