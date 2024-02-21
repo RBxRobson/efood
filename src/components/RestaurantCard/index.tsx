@@ -5,27 +5,32 @@ import Tag from '../Tag'
 import * as S from './styles'
 
 type Props = {
-  infos: string[]
+  type: string
   description: string
   image: string
-  rating: string
+  rating: number
   title: string
+  featured: boolean
 }
 
 const RestaurantCard = ({
-  infos,
+  type,
   description,
   image,
   title,
-  rating
+  rating,
+  featured
 }: Props) => {
+  const upperCaseFirstLetter = (type: string) => {
+    return type.charAt(0).toUpperCase() + type.slice(1)
+  }
+
   return (
     <S.CardContainer>
       <img src={image} />
       <S.Infos>
-        {infos.map((info) => (
-          <Tag key={info}>{info}</Tag>
-        ))}
+        {featured === true && <Tag>Destaque da semana</Tag>}
+        <Tag>{upperCaseFirstLetter(type)}</Tag>
       </S.Infos>
       <S.DescriptionContainer>
         <S.Title>

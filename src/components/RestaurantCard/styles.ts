@@ -6,10 +6,11 @@ export const CardContainer = styled.li`
   position: relative;
   background-color: ${colors.white_default};
 
-  p {
-    font-size: 14px;
-    line-height: 22px;
-    padding: 16px 0;
+  & > img {
+    width: 100%;
+    height: 218px;
+    object-fit: cover;
+    object-position: center;
   }
 `
 
@@ -26,6 +27,13 @@ export const DescriptionContainer = styled.div`
   border: 1px solid ${colors.txt_home_color};
   border-top: none;
   margin-top: -4px;
+
+  p {
+    font-size: 14px;
+    line-height: 22px;
+    padding: 16px 0;
+    height: 142px;
+  }
 `
 
 export const Title = styled.div`
