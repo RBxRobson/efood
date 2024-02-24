@@ -23,16 +23,19 @@ export const Infos = styled.div`
 `
 
 export const DescriptionContainer = styled.div`
+  height: calc(100% - 218px);
+  display: flex;
+  flex-direction: column;
   padding: 8px;
   border: 1px solid ${colors.txt_home_color};
   border-top: none;
   margin-top: -4px;
 
   p {
+    flex-grow: 1; //*Ocupando todo espaço disponível
     font-size: 14px;
     line-height: 22px;
     padding: 16px 0;
-    height: 142px;
   }
 `
 

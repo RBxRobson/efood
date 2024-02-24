@@ -14,8 +14,18 @@ export const CardContainer = styled.li`
   }
 
   p {
+    display: -webkit-box; //* Modelo em bloco de linha
+    -webkit-box-orient: vertical; //* Direcionamento da linha
+    -webkit-line-clamp: 4; //* Quantidade de linhas
+    overflow: hidden; //* Corte do excedente
+    text-overflow: ellipsis; //* Adição de reticencias ao final
     font-size: 14px;
     line-height: 22px;
+  }
+
+  img {
+    width: 100%;
+    height: 168px;
   }
 `
 
