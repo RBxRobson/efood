@@ -3,42 +3,31 @@ import Rating from '../Rating'
 import Tag from '../Tag'
 
 import * as S from './styles'
+import { Restaurant } from '../../types/restaurant'
 
 type Props = {
-  type: string
-  description: string
-  image: string
-  rating: number
-  title: string
-  featured: boolean
+  restaurant: Restaurant
 }
 
-const RestaurantCard = ({
-  type,
-  description,
-  image,
-  title,
-  rating,
-  featured
-}: Props) => {
-  const upperCaseFirstLetter = (type: string) => {
-    return type.charAt(0).toUpperCase() + type.slice(1)
-  }
+export const upperCaseFirstLetter = (type: string) => {
+  return type.charAt(0).toUpperCase() + type.slice(1)
+}
 
+const RestaurantCard = ({ restaurant }: Props) => {
   return (
     <S.CardContainer>
-      <img src={image} />
+      <img src={restaurant.capa} />
       <S.Infos>
-        {featured === true && <Tag>Destaque da semana</Tag>}
-        <Tag>{upperCaseFirstLetter(type)}</Tag>
+        {restaurant.destacado && <Tag>Destaque da semana</Tag>}
+        <Tag>{upperCaseFirstLetter(restaurant.tipo)}</Tag>
       </S.Infos>
       <S.DescriptionContainer>
         <S.Title>
-          <h2>{title}</h2>
-          <Rating>{rating}</Rating>
+          <h2>{restaurant.titulo}</h2>
+          <Rating>{restaurant.avaliacao}</Rating>
         </S.Title>
-        <p>{description}</p>
-        <Link to="/restaurant">
+        <p>{restaurant.descricao}</p>
+        <Link to={`/restaurant/${restaurant.id}`}>
           <S.Btn>Saiba Mais</S.Btn>
         </Link>
       </S.DescriptionContainer>

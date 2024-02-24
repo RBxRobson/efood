@@ -1,66 +1,77 @@
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+
 import Banner from '../../components/Banner'
 import CardList from '../../components/CardList'
 import Header from '../../components/Header'
-import Product from '../../models/Product'
+import { Menu, Restaurant as RestaurantType } from '../../types/restaurant'
+import ProductCard from '../../components/ProductCard'
+import Modal from '../../components/Modal'
 
-import pizza from '../../assets/images/pizza.png'
-import BannerLaDolce from '../../assets/images/banner1.svg'
-
-const cards: Product[] = [
-  {
-    id: 1,
-    image: pizza,
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-  },
-  {
-    id: 2,
-    image: pizza,
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-  },
-  {
-    id: 3,
-    image: pizza,
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-  },
-  {
-    id: 4,
-    image: pizza,
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-  },
-  {
-    id: 5,
-    image: pizza,
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-  },
-  {
-    id: 6,
-    image: pizza,
-    title: 'Pizza Marguerita',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-  }
-]
+interface ModalState extends Omit<Menu, 'id'> {
+  isVisible: boolean
+}
 
 const Restaurant = () => {
+  const { id } = useParams()
+  const [restaurant, setRestaurant] = useState<RestaurantType>()
+  const [modal, setModal] = useState<ModalState>({
+    isVisible: false,
+    foto: '',
+    nome: '',
+    descricao: '',
+    porcao: '',
+    preco: 0
+  })
+
+  useEffect(() => {
+    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
+      .then((res) => res.json())
+      .then((restaurant) => setRestaurant(restaurant))
+  }, [id])
+
+  if (!restaurant) {
+    return <h3>Carregando...</h3>
+  }
+
   return (
     <>
       <Header model="secondary" />
       <Banner
-        category="Italiana"
-        image={BannerLaDolce}
-        name="La Dolce Vita Trattoria"
+        image={restaurant.capa}
+        title={restaurant.titulo}
+        type={restaurant.tipo}
       />
-      <CardList columns={3} cards={cards} />
+      <CardList list="menu">
+        <>
+          {restaurant.cardapio.map((menu) => (
+            <ProductCard
+              key={menu.id}
+              description={menu.descricao}
+              name={menu.nome}
+              image={menu.foto}
+              onClick={() =>
+                setModal({
+                  isVisible: true,
+                  foto: menu.foto,
+                  nome: menu.nome,
+                  descricao: menu.descricao,
+                  porcao: menu.porcao,
+                  preco: menu.preco
+                })
+              }
+            />
+          ))}
+        </>
+      </CardList>
+      <Modal
+        isVisible={modal.isVisible}
+        image={modal.foto}
+        name={modal.nome}
+        description={modal.descricao}
+        portion={modal.porcao}
+        price={modal.preco}
+      />
     </>
   )
 }
