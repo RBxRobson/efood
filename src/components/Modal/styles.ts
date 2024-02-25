@@ -52,6 +52,7 @@ export const ModalContent = styled.div`
     }
 
     button {
+      font-size: 14px;
       width: fit-content;
       border: none;
       padding: 4px 6px;
@@ -69,6 +70,7 @@ export const FoodImg = styled.img`
 `
 
 export const Icon = styled.img`
+  cursor: pointer;
   position: absolute;
   top: 8px;
   right: 8px;
