@@ -9,6 +9,14 @@ type Props = {
   portion: string
   price: number
   isVisible: boolean
+  closeModal: () => void
+}
+
+export const formatPrice = (price = 0) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(price)
 }
 
 const Modal = ({
@@ -17,18 +25,13 @@ const Modal = ({
   description,
   portion,
   price,
-  isVisible
+  isVisible,
+  closeModal
 }: Props) => {
   return (
     <S.Modal className={isVisible ? 'visible' : ''}>
       <S.ModalContent className="container">
-        <S.Icon
-          src={icon}
-          alt="Ícone para fechar"
-          onClick={() => {
-            isVisible = false
-          }}
-        />
+        <S.Icon src={icon} alt="Ícone para fechar" onClick={closeModal} />
         <S.FoodImg src={image} />
         <div>
           <h3>{name}</h3>
@@ -36,15 +39,10 @@ const Modal = ({
             {description} <br /> <br />
             Serve: de {portion}
           </p>
-          <button>Adicionar ao carrinho - R$ {price}</button>
+          <button>Adicionar ao carrinho - {formatPrice(price)}</button>
         </div>
       </S.ModalContent>
-      <div
-        className="overlay"
-        onClick={() => {
-          isVisible = false
-        }}
-      ></div>
+      <div className="overlay" onClick={closeModal}></div>
     </S.Modal>
   )
 }

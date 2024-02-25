@@ -34,6 +34,10 @@ const Restaurant = () => {
     return <h3>Carregando...</h3>
   }
 
+  const closeModal = () => {
+    setModal({ ...modal, isVisible: false })
+  }
+
   return (
     <>
       <Header model="secondary" />
@@ -71,6 +75,7 @@ const Restaurant = () => {
         description={modal.descricao}
         portion={modal.porcao}
         price={modal.preco}
+        closeModal={closeModal}
       />
     </>
   )
