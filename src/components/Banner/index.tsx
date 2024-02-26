@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react'
-
-import { Restaurant } from '../../types/restaurant'
 import * as S from './styles'
 import { upperCaseFirstLetter } from '../RestaurantCard'
 

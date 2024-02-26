@@ -1,7 +1,3 @@
-import { Restaurant } from '../../types/restaurant'
-import RestaurantCard from '../RestaurantCard'
-import ProductCard from '../ProductCard'
-
 import { List } from './styles'
 
 export type Props = {

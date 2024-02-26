@@ -1,7 +1,4 @@
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import { Btn, CardContainer } from './styles'
-import { Restaurant } from '../../types/restaurant'
 
 type Props = {
   image: string
