@@ -1,19 +1,36 @@
+import { useDispatch } from 'react-redux'
+
+import { open, setModal } from '../../redux/reducers/modal'
+import { Menu } from '../../types/restaurant'
 import { Btn, CardContainer } from './styles'
 
 type Props = {
-  image: string
-  name: string
-  description: string
-  onClick: () => void
+  menu: Menu
 }
 
-const ProductCard = ({ image, name, description, onClick }: Props) => {
+const ProductCard = ({ menu }: Props) => {
+  const dispatch = useDispatch()
+
+  const openModal = () => {
+    dispatch(
+      setModal({
+        descricao: menu.descricao,
+        foto: menu.foto,
+        id: menu.id,
+        nome: menu.nome,
+        porcao: menu.porcao,
+        preco: menu.preco
+      })
+    )
+    dispatch(open())
+  }
+
   return (
     <CardContainer>
-      <img src={image} />
-      <h3>{name}</h3>
-      <p>{description}</p>
-      <Btn onClick={onClick}>Adicionar ao carrinho</Btn>
+      <img src={menu.foto} />
+      <h3>{menu.nome}</h3>
+      <p>{menu.descricao}</p>
+      <Btn onClick={openModal}>Mais detalhes</Btn>
     </CardContainer>
   )
 }

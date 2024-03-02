@@ -1,16 +1,10 @@
+import { useSelector, useDispatch } from 'react-redux'
+
 import icon from '../../assets/images/close.png'
+import { RootReducer } from '../../redux'
+import { close } from '../../redux/reducers/modal'
 
 import * as S from './styles'
-
-type Props = {
-  image: string
-  name: string
-  description: string
-  portion: string
-  price: number
-  isVisible: boolean
-  closeModal: () => void
-}
 
 export const formatPrice = (price = 0) => {
   return new Intl.NumberFormat('pt-BR', {
@@ -19,27 +13,26 @@ export const formatPrice = (price = 0) => {
   }).format(price)
 }
 
-const Modal = ({
-  image,
-  name,
-  description,
-  portion,
-  price,
-  isVisible,
-  closeModal
-}: Props) => {
+const Modal = () => {
+  const dispatch = useDispatch()
+  const { isOpen, item } = useSelector((state: RootReducer) => state.modal)
+
+  const closeModal = () => {
+    dispatch(close())
+  }
+
   return (
-    <S.Modal className={isVisible ? 'visible' : ''}>
+    <S.Modal className={isOpen ? 'visible' : ''}>
       <S.ModalContent className="container">
         <S.Icon src={icon} alt="Ícone para fechar" onClick={closeModal} />
-        <S.FoodImg src={image} />
+        <S.FoodImg src={item.foto} />
         <div>
-          <h3>{name}</h3>
+          <h3>{item.nome}</h3>
           <p>
-            {description} <br /> <br />
-            Serve: de {portion}
+            {item.descricao} <br /> <br />
+            Serve: de {item.porcao}
           </p>
-          <button>Adicionar ao carrinho - {formatPrice(price)}</button>
+          <button>Adicionar ao carrinho - {formatPrice(item.preco)}</button>
         </div>
       </S.ModalContent>
       <div className="overlay" onClick={closeModal}></div>

@@ -1,6 +1,12 @@
-import * as S from './styles'
-import logo from '../../assets/images/logo.png'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+
+import logo from '../../assets/images/logo.png'
+
+import { open } from '../../redux/reducers/cart'
+import { RootReducer } from '../../redux'
+
+import * as S from './styles'
 
 //* Criando uma tipagem para condicionar a exibição de acordo com o modelo do header
 export type Props = {
@@ -8,6 +14,13 @@ export type Props = {
 }
 
 const Header = ({ model }: Props) => {
+  const dispatch = useDispatch()
+  const { items } = useSelector((state: RootReducer) => state.cart)
+
+  const openCart = () => {
+    dispatch(open())
+  }
+
   return (
     <S.Header model={model}>
       <S.HeaderContainer className="container">
@@ -20,7 +33,7 @@ const Header = ({ model }: Props) => {
         ) : (
           <>
             <Link to="/">Restaurantes</Link>
-            <p>0 produto(s) no carrinho</p>
+            <p>{items.length} produto(s) no carrinho</p>
           </>
         )}
       </S.HeaderContainer>
