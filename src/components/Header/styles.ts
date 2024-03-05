@@ -43,6 +43,7 @@ export const HeaderContainer = styled.div`
   }
 
   p {
+    cursor: pointer;
     position: absolute;
     right: 0;
   }

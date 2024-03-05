@@ -15,15 +15,6 @@ export const Modal = styled.div`
   &.visible {
     display: flex;
   }
-
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-  }
 `
 
 export const ModalContent = styled.div`
@@ -52,9 +43,10 @@ export const ModalContent = styled.div`
     }
 
     button {
+      cursor: pointer;
+      border: none;
       font-size: 14px;
       width: fit-content;
-      border: none;
       padding: 4px 6px;
       background-color: ${colors.hf_color};
       color: ${colors.txt_home_color};
