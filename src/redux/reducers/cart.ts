@@ -3,12 +3,12 @@ import { Menu } from '../../types/restaurant'
 
 type CartState = {
   items: Menu[]
-  isOpen: boolean
+  isOpenCart: boolean
 }
 
 const initialState: CartState = {
   items: [],
-  isOpen: false
+  isOpenCart: false
 }
 
 const cartSlice = createSlice({
@@ -16,24 +16,21 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action: PayloadAction<Menu>) => {
-      const product = state.items.find((item) => item.id === action.payload.id)
-      if (!product) {
-        state.items.push(action.payload)
-      } else {
-        alert('Este prato já foi adicionado ao carrinho')
-      }
+      const newItem = { ...action.payload } //* Criando uma cópia do item
+      newItem.id = state.items.length //* Alterando id para manter unicidade
+      state.items.push(newItem) //* Adicionando cópia do item alterado ao state
     },
     remove: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload)
     },
-    open: (state) => {
-      state.isOpen = true
+    openCart: (state) => {
+      state.isOpenCart = true
     },
-    close: (state) => {
-      state.isOpen = false
+    closeCart: (state) => {
+      state.isOpenCart = false
     }
   }
 })
 
-export const { add, close, open, remove } = cartSlice.actions
+export const { add, closeCart, openCart, remove } = cartSlice.actions
 export default cartSlice.reducer
