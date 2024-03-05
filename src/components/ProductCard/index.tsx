@@ -30,7 +30,9 @@ const ProductCard = ({ menu }: Props) => {
       <img src={menu.foto} />
       <h3>{menu.nome}</h3>
       <p>{menu.descricao}</p>
-      <Btn onClick={openModal}>Mais detalhes</Btn>
+      <Btn type="button" onClick={openModal}>
+        Mais detalhes
+      </Btn>
     </CardContainer>
   )
 }

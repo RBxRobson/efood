@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import icon from '../../assets/images/close.png'
 import { RootReducer } from '../../redux'
 import { close } from '../../redux/reducers/modal'
+import { add } from '../../redux/reducers/cart'
 
 import * as S from './styles'
 
@@ -21,6 +22,10 @@ const Modal = () => {
     dispatch(close())
   }
 
+  const addItem = () => {
+    dispatch(add(item))
+  }
+
   return (
     <S.Modal className={isOpen ? 'visible' : ''}>
       <S.ModalContent className="container">
@@ -32,7 +37,9 @@ const Modal = () => {
             {item.descricao} <br /> <br />
             Serve: de {item.porcao}
           </p>
-          <button>Adicionar ao carrinho - {formatPrice(item.preco)}</button>
+          <button type="button" onClick={addItem}>
+            Adicionar ao carrinho - {formatPrice(item.preco)}
+          </button>
         </div>
       </S.ModalContent>
       <div className="overlay" onClick={closeModal}></div>
