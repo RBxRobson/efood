@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Footer from './components/Footer'
 import Rotas from './routes'
-import Cart from './components/Cart'
+import SideBar from './components/SideBar'
 
 import { GlobalStyles } from './styles'
 import { store } from './redux'
@@ -15,7 +15,7 @@ function App() {
         <GlobalStyles />
         <Rotas />
         <Footer />
-        <Cart />
+        <SideBar />
       </BrowserRouter>
     </Provider>
   )
