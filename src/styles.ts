@@ -1,10 +1,12 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
+import { TagContainer } from './components/Tag/styles'
 
 export const colors = {
   bg_color: '#FFF8F2',
   hf_color: '#FFEBD9',
   txt_home_color: '#E66767',
-  white_default: '#ffffff'
+  white_default: '#ffffff',
+  black_default: '#4B4B4B'
 }
 
 export const GlobalStyles = createGlobalStyle`
