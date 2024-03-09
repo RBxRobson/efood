@@ -6,16 +6,13 @@ import { formatPrice } from '../Modal'
 import { Btn } from '../ProductCard/styles'
 import { closeCart, remove } from '../../redux/reducers/cart'
 import { RootReducer } from '../../redux'
+import { SideBarProps } from '../FormDelivery'
 
 import * as S from './styles'
 
-const Cart = () => {
+const Cart = ({ onClickNext }: SideBarProps) => {
   const dispatch = useDispatch()
-  const { items, isOpenCart } = useSelector((state: RootReducer) => state.cart)
-
-  const close = () => {
-    dispatch(closeCart())
-  }
+  const { items } = useSelector((state: RootReducer) => state.cart)
 
   const removeItem = (id: number) => {
     if (items.length === 1) {
@@ -33,39 +30,37 @@ const Cart = () => {
   }
 
   return (
-    <S.CartContainer className={isOpenCart ? 'is-open' : ''}>
-      <div className="overlay" onClick={close}></div>
-      <S.SideBar>
-        <S.List>
-          {items.map((item) => (
-            <S.Item key={item.id}>
-              <img
-                className="icon"
-                src={icon}
-                alt="Ícone de uma lixeira"
-                onClick={() => removeItem(item.id)}
-              />
-              <img src={item.foto} alt={item.nome} />
-              <div>
-                <h4>{item.nome}</h4>
-                <span>{formatPrice(item.preco)}</span>
-              </div>
-            </S.Item>
-          ))}
-        </S.List>
-        <S.Amount>
-          <p>Valor total</p>
-          <span>{formatPrice(getTotalPrice())}</span>
-        </S.Amount>
-        <Btn
-          title="Clique aqui para continuar com a entrega"
-          type="button"
-          style={{ marginRight: '4px' }}
-        >
-          Continuar com a entrega
-        </Btn>
-      </S.SideBar>
-    </S.CartContainer>
+    <>
+      <S.List>
+        {items.map((item) => (
+          <S.Item key={item.id}>
+            <img
+              className="icon"
+              src={icon}
+              alt="Ícone de uma lixeira"
+              onClick={() => removeItem(item.id)}
+            />
+            <img src={item.foto} alt={item.nome} />
+            <div>
+              <h4>{item.nome}</h4>
+              <span>{formatPrice(item.preco)}</span>
+            </div>
+          </S.Item>
+        ))}
+      </S.List>
+      <S.Amount>
+        <p>Valor total</p>
+        <span>{formatPrice(getTotalPrice())}</span>
+      </S.Amount>
+      <Btn
+        title="Clique aqui para continuar com a entrega"
+        type="button"
+        style={{ marginRight: '4px' }}
+        onClick={onClickNext}
+      >
+        Continuar com a entrega
+      </Btn>
+    </>
   )
 }
 
