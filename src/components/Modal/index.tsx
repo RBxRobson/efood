@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import icon from '../../assets/images/close.png'
 import { RootReducer } from '../../redux'
 import { close } from '../../redux/reducers/modal'
-import { add } from '../../redux/reducers/cart'
+import { add, openCart } from '../../redux/reducers/cart'
 
 import * as S from './styles'
 
@@ -24,6 +24,8 @@ const Modal = () => {
 
   const addItem = () => {
     dispatch(add(item))
+    dispatch(close())
+    dispatch(openCart())
   }
 
   return (
