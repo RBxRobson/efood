@@ -9,14 +9,14 @@ export const Form = styled.form`
     width: 100%;
   }
 
-  .wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
-
   h4 {
     margin-bottom: 16px;
   }
+`
+
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 export const InputGroup = styled.div`
