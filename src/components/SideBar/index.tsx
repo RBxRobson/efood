@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { closeCart } from '../../redux/reducers/cart'
+import { clearCart, closeCart } from '../../redux/reducers/cart'
 import { RootReducer } from '../../redux'
 
-import * as S from './styles'
-import Cart from '../Cart'
 import FormDelivery from '../FormDelivery'
+import FormPayment from '../FormPayment'
+import Cart from '../Cart'
+import OrderPlaced from '../OrderPlaced'
+
+import * as S from './styles'
 
 type SideBarState = 'cart' | 'delivery' | 'payment' | 'order placed'
 
@@ -23,6 +26,12 @@ const SideBar = () => {
     setSideBarState(state)
   }
 
+  const orderCompleted = () => {
+    dispatch(clearCart())
+    dispatch(closeCart())
+    setState('cart')
+  }
+
   return (
     <S.CartContainer className={isOpenCart ? 'is-open' : ''}>
       <div className="overlay" onClick={close}></div>
@@ -35,6 +44,15 @@ const SideBar = () => {
             onClickBack={() => setState('cart')}
             onClickNext={() => setState('payment')}
           />
+        )}
+        {sideBarState === 'payment' && (
+          <FormPayment
+            onClickBack={() => setState('delivery')}
+            onClickNext={() => setState('order placed')}
+          />
+        )}
+        {sideBarState === 'order placed' && (
+          <OrderPlaced onClickBack={orderCompleted} />
         )}
       </S.SideBar>
     </S.CartContainer>
