@@ -8,16 +8,22 @@ const Home = () => {
   const { data: restaurants } = useGetRestaurantsQuery()
 
   //* Array para armazenar os restaurantes em ordem de prioridade a partir do destaque
-  const sortedRestaurants = restaurants
-    ? [...restaurants!].sort((restaurant) => (restaurant.destacado ? -1 : 1))
-    : []
+  const sortedRestaurants = () => {
+    if (!restaurants) {
+      return []
+    } else {
+      return [...restaurants].sort((restaurant) =>
+        restaurant.destacado ? -1 : 1
+      )
+    }
+  }
 
   return (
     <>
       <Header model="primary" />
       <CardList list="restaurant">
         <>
-          {sortedRestaurants.map((restaurant) => (
+          {sortedRestaurants().map((restaurant) => (
             <RestaurantCard key={restaurant.id} restaurant={restaurant} />
           ))}
         </>

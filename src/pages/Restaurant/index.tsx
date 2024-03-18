@@ -8,9 +8,13 @@ import Modal from '../../components/Modal'
 
 import { useGetRestaurantQuery } from '../../services/api'
 
+type TypeParams = {
+  id: string
+}
+
 const Restaurant = () => {
-  const { id } = useParams()
-  const { data: restaurant } = useGetRestaurantQuery(id!)
+  const { id } = useParams() as TypeParams
+  const { data: restaurant } = useGetRestaurantQuery(id)
 
   if (!restaurant) {
     return <h3>Carregando...</h3>

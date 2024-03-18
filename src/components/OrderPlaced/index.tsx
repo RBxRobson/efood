@@ -22,7 +22,11 @@ const OrderPlaced = ({ onClickBack }: SideBarProps) => {
         <br /> Esperamos que desfrute de uma deliciosa e agradável experiência
         gastronômica. Bom apetite!
       </p>
-      <Button type="button" title="Concluir" onClick={onClickBack!}>
+      <Button
+        type="button"
+        title="Concluir"
+        onClick={() => onClickBack && onClickBack()}
+      >
         Concluir
       </Button>
     </OrderContainer>

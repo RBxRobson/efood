@@ -39,9 +39,8 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
         .min(3, 'O número precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório')
     }),
-    onSubmit: (values) => {
-      onClickNext!()
-      console.log(values)
+    onSubmit: () => {
+      onClickNext && onClickNext()
     }
   })
 
@@ -142,7 +141,7 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
       <Button
         title="Clique aqui para voltar ao carrinho"
         type="button"
-        onClick={onClickBack!}
+        onClick={() => onClickBack && onClickBack()}
       >
         Voltar ao carrinho
       </Button>

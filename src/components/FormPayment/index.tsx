@@ -38,7 +38,7 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
         .required('O campo é obrigatório')
     }),
     onSubmit: () => {
-      onClickNext!()
+      onClickNext && onClickNext()
     }
   })
 
@@ -139,7 +139,7 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
       <Button
         title="Clique aqui para voltar ao carrinho"
         type="button"
-        onClick={onClickBack!}
+        onClick={() => onClickBack && onClickBack()}
       >
         Voltar para edição de endereço
       </Button>
