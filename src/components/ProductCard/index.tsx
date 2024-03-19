@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
 
 import { open, setModal } from '../../redux/reducers/modal'
-import { Menu } from '../../types/restaurant'
 import { Btn, CardContainer } from './styles'
 
 type Props = {

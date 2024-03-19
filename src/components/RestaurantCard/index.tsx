@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 import Rating from '../Rating'
 import Tag from '../Tag'
 
-import { Restaurant } from '../../types/restaurant'
-
 import * as S from './styles'
 
 type Props = {
