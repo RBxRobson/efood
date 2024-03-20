@@ -1,16 +1,23 @@
-import { useSelector } from 'react-redux'
+import InputMask from 'react-input-mask'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { RootReducer } from '../../redux'
-import { SideBarProps } from '../FormDelivery'
 import { Form, InputGroup, Wrapper } from '../FormDelivery/styles'
 import { formatPrice } from '../Modal'
+import { formPayment } from '../../redux/reducers/form'
+import { usePurchaseMutation } from '../../services/api'
 
 import Button from '../Button'
 
 const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
   const { items } = useSelector((state: RootReducer) => state.cart)
+  const { delivery, payment, product } = useSelector(
+    (state: RootReducer) => state.form
+  )
+  const [purchase] = usePurchaseMutation()
+  const dispatch = useDispatch()
 
   const form = useFormik({
     initialValues: {
@@ -18,27 +25,50 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
       cardNumber: '',
       cvv: '',
       expiredMonth: '',
-      expiredYear: ''
+      expiredYear: '',
+      products: items.map((item) => ({
+        id: item.id,
+        price: item.preco
+      }))
     },
     validationSchema: Yup.object({
       cardName: Yup.string()
         .min(3, 'O nome no cartão precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
       cardNumber: Yup.string()
-        .min(3, 'O nome no cartão precisa ter pelo menos 3 caracteres')
+        .min(19, 'O nome no cartão precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
       cvv: Yup.number()
         .min(3, 'O código de segurança deve ter pelo menos 3 caracteres')
+        .typeError('O campo é obrigatório')
+        .integer('O campo é obrigatório')
         .required('O campo é obrigatório'),
       expiredMonth: Yup.number()
-        .min(2, 'O mês de vencimento deve ter pelo menos 2 caracteres')
-        .required('O campo é obrigatório'),
-      expiredYear: Yup.number()
-        .min(2, 'O ano de vencimento deve ter pelo menos 2 caracteres')
         .required('O campo é obrigatório')
+        .typeError('O campo é obrigatório')
+        .min(1, 'O mês de vencimento deve ser um número de 1 a 12')
+        .max(12, 'O mês de vencimento deve ser um número de 1 a 12')
+        .integer('O campo é obrigatório'),
+      expiredYear: Yup.number()
+        .min(24, 'Ano inválido')
+        .typeError('O campo é obrigatório')
+        .required('O campo é obrigatório')
+        .integer('O campo é obrigatório')
     }),
-    onSubmit: () => {
-      onClickNext && onClickNext()
+    onSubmit: async (values) => {
+      try {
+        dispatch(formPayment(values))
+        await purchase({
+          // Espera até que a chamada de compra seja concluída
+          delivery: delivery,
+          payment: payment,
+          product: product
+        })
+        onClickNext && onClickNext() // Executa a próxima etapa após todas as operações serem concluídas
+      } catch (error) {
+        console.error('Erro ao realizar o pagamento ou a compra:', error)
+        // Lida com qualquer erro que ocorra durante o dispatch ou a compra
+      }
     }
   })
 
@@ -75,25 +105,27 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
       <Wrapper>
         <InputGroup style={{ width: '228px' }}>
           <label htmlFor="cardNumber">Número do cartão</label>
-          <input
+          <InputMask
             id="cardNumber"
             type="text"
             name="cardNumber"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             value={form.values.cardNumber}
+            mask="9999 9999 9999 9999"
           />
           <small>{getErrorMessage('cardNumber', form.errors.cardNumber)}</small>
         </InputGroup>
         <InputGroup style={{ width: '86px' }}>
           <label htmlFor="cvv">CVV</label>
-          <input
+          <InputMask
             id="cvv"
-            type="number"
+            type="string"
             name="cvv"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             value={form.values.cvv}
+            mask="999"
           />
           <small>{getErrorMessage('city', form.errors.cvv)}</small>
         </InputGroup>
@@ -101,13 +133,14 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
       <Wrapper style={{ marginBottom: '24px' }}>
         <InputGroup style={{ width: '155px' }}>
           <label htmlFor="expiredMonth">Mês de vencimento</label>
-          <input
+          <InputMask
             id="expiredMonth"
-            type="number"
+            type="string"
             name="expiredMonth"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             value={form.values.expiredMonth}
+            mask="99"
           />
           <small>
             {getErrorMessage('expiredMonth', form.errors.expiredMonth)}
@@ -115,13 +148,14 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
         </InputGroup>
         <InputGroup style={{ width: '155px' }}>
           <label htmlFor="expiredYear">Ano de vencimento</label>
-          <input
+          <InputMask
             id="expiredYear"
-            type="number"
+            type="string"
             name="expiredYear"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             value={form.values.expiredYear}
+            mask="99"
           />
           <small>
             {getErrorMessage('expiredYear', form.errors.expiredYear)}

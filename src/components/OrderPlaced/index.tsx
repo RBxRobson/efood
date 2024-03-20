@@ -1,12 +1,15 @@
 import Button from '../Button'
-import { SideBarProps } from '../FormDelivery'
+
+import { usePurchaseMutation } from '../../services/api'
 
 import { OrderContainer } from './styles'
 
 const OrderPlaced = ({ onClickBack }: SideBarProps) => {
+  const [, { data }] = usePurchaseMutation()
+
   return (
     <OrderContainer>
-      <h3>Pedido Realizado - ID</h3>
+      <h3>Pedido Realizado - ID {data && data.orderId} </h3>
       <p>
         Estamos felizes em informar que seu pedido já está em processo de
         preparação e, em breve, será entregue no endereço fornecido.
@@ -19,7 +22,8 @@ const OrderPlaced = ({ onClickBack }: SideBarProps) => {
         Lembre-se da importância de higienizar as mãos após o recebimento do
         pedido, garantindo assim sua segurança e bem-estar durante a refeição.
         <br />
-        <br /> Esperamos que desfrute de uma deliciosa e agradável experiência
+        <br />
+        Esperamos que desfrute de uma deliciosa e agradável experiência
         gastronômica. Bom apetite!
       </p>
       <Button
