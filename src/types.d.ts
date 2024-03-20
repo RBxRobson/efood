@@ -47,3 +47,8 @@ declare type PurchasePayload = {
     }
   }
 }
+
+declare type SideBarProps = {
+  onClickNext?: () => void
+  onClickBack?: () => void
+}
