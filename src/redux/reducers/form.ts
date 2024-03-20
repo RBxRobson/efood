@@ -30,16 +30,16 @@ type DeliveryInfos = {
   address: string
   city: string
   cep: string
-  number: number
+  number: string
   complement?: string
 }
 
 type PaymentInfos = {
   cardName: string
   cardNumber: string
-  cvv: number
-  expiredMonth: number
-  expiredYear: number
+  cvv: string
+  expiredMonth: string
+  expiredYear: string
   products: Product[]
 }
 
@@ -57,7 +57,7 @@ const formSlice = createSlice({
           description: address,
           city,
           zipCode: cep,
-          number,
+          number: Number(number),
           complement
         }
       }
@@ -69,10 +69,10 @@ const formSlice = createSlice({
       state.payment.card = {
         name: cardName,
         number: cardNumber,
-        code: cvv,
+        code: Number(cvv),
         expires: {
-          month: expiredMonth,
-          year: expiredYear
+          month: Number(expiredMonth),
+          year: Number(expiredYear)
         }
       }
 
