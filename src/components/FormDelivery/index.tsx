@@ -1,15 +1,16 @@
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
+import InputMask from 'react-input-mask'
 import * as Yup from 'yup'
 
-import { Form, InputGroup, Wrapper } from './styles'
 import Button from '../Button'
+import { formDelivery } from '../../redux/reducers/form'
 
-export type SideBarProps = {
-  onClickNext?: () => void
-  onClickBack?: () => void
-}
+import { Form, InputGroup, Wrapper } from './styles'
 
 const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
+  const dispatch = useDispatch()
+
   const form = useFormik({
     initialValues: {
       receiver: '',
@@ -27,19 +28,21 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
         .min(5, 'O endereço precisa ter pelo menos 5 caracteres')
         .required('O campo é obrigatório'),
       city: Yup.string()
-        .min(3, 'O nome da cidade ter pelo menos 3 caracteres')
+        .min(3, 'O nome da cidade precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
       cep: Yup.string()
         .min(8, 'O CEP precisa ter pelo menos 8 caracteres')
         .required('O campo é obrigatório'),
       number: Yup.number()
-        .min(3, 'O número precisa ter pelo menos 3 caracteres')
+        .min(2, 'O número precisa ter pelo menos 2 caracteres')
         .required('O campo é obrigatório'),
-      complement: Yup.string()
-        .min(3, 'O número precisa ter pelo menos 3 caracteres')
-        .required('O campo é obrigatório')
+      complement: Yup.string().min(
+        3,
+        'O número precisa ter pelo menos 3 caracteres'
+      )
     }),
-    onSubmit: () => {
+    onSubmit: (values) => {
+      dispatch(formDelivery(values))
       onClickNext && onClickNext()
     }
   })
@@ -95,25 +98,27 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
       <Wrapper>
         <InputGroup style={{ width: '155px' }}>
           <label htmlFor="cep">CEP</label>
-          <input
+          <InputMask
             id="cep"
             type="text"
             name="cep"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             value={form.values.cep}
+            mask="99999-999"
           />
           <small>{getErrorMessage('cep', form.errors.cep)}</small>
         </InputGroup>
         <InputGroup style={{ width: '155px' }}>
           <label htmlFor="number">Número</label>
-          <input
+          <InputMask
             id="number"
-            type="number"
+            type="string"
             name="number"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             value={form.values.number}
+            mask="9999"
           />
           <small>{getErrorMessage('number', form.errors.number)}</small>
         </InputGroup>

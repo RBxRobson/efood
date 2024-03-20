@@ -6,7 +6,6 @@ import { formatPrice } from '../Modal'
 import { Btn } from '../ProductCard/styles'
 import { closeCart, remove } from '../../redux/reducers/cart'
 import { RootReducer } from '../../redux'
-import { SideBarProps } from '../FormDelivery'
 
 import * as S from './styles'
 
