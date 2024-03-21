@@ -1,15 +1,15 @@
 import Button from '../Button'
 
-import { usePurchaseMutation } from '../../services/api'
-
 import { OrderContainer } from './styles'
 
-const OrderPlaced = ({ onClickBack }: SideBarProps) => {
-  const [, { data }] = usePurchaseMutation()
+interface OrderPlacedProps extends SideBarProps {
+  orderId: string
+}
 
+const OrderPlaced = ({ onClickBack, orderId }: OrderPlacedProps) => {
   return (
     <OrderContainer>
-      <h3>Pedido Realizado - ID {data && data.orderId} </h3>
+      <h3>Pedido Realizado - ID {orderId} </h3>
       <p>
         Estamos felizes em informar que seu pedido já está em processo de
         preparação e, em breve, será entregue no endereço fornecido.
