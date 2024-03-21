@@ -8,6 +8,7 @@ import FormDelivery from '../FormDelivery'
 import FormPayment from '../FormPayment'
 import Cart from '../Cart'
 import OrderPlaced from '../OrderPlaced'
+import { usePurchaseMutation } from '../../services/api'
 
 import * as S from './styles'
 
@@ -17,6 +18,7 @@ const SideBar = () => {
   const dispatch = useDispatch()
   const { isOpenCart } = useSelector((state: RootReducer) => state.cart)
   const [sideBarState, setSideBarState] = useState<SideBarState>('cart')
+  const [purchase, { data, isSuccess }] = usePurchaseMutation()
 
   const close = () => {
     dispatch(closeCart())
@@ -51,8 +53,8 @@ const SideBar = () => {
             onClickNext={() => setState('order placed')}
           />
         )}
-        {sideBarState === 'order placed' && (
-          <OrderPlaced onClickBack={orderCompleted} />
+        {sideBarState === 'order placed' && isSuccess && data && (
+          <OrderPlaced onClickBack={orderCompleted} orderId={data.orderId} />
         )}
       </S.SideBar>
     </S.CartContainer>
