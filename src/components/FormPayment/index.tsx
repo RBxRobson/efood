@@ -1,73 +1,76 @@
 import InputMask from 'react-input-mask'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { RootReducer } from '../../redux'
 import { Form, InputGroup, Wrapper } from '../FormDelivery/styles'
 import { formatPrice } from '../Modal'
-import { formPayment } from '../../redux/reducers/form'
 import { usePurchaseMutation } from '../../services/api'
 
 import Button from '../Button'
 
 const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
   const { items } = useSelector((state: RootReducer) => state.cart)
-  const { delivery, payment, product } = useSelector(
-    (state: RootReducer) => state.form
-  )
-  const [purchase] = usePurchaseMutation()
-  const dispatch = useDispatch()
+  const { delivery } = useSelector((state: RootReducer) => state.form)
+  const [purchase, { data }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
-      cardName: '',
-      cardNumber: '',
-      cvv: '',
-      expiredMonth: '',
-      expiredYear: '',
-      products: items.map((item) => ({
-        id: item.id,
-        price: item.preco
-      }))
+      name: '',
+      number: '',
+      code: '',
+      month: '',
+      year: ''
     },
     validationSchema: Yup.object({
-      cardName: Yup.string()
+      name: Yup.string()
         .min(3, 'O nome no cartão precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
-      cardNumber: Yup.string()
+      number: Yup.string()
         .min(19, 'O nome no cartão precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
-      cvv: Yup.number()
+      code: Yup.number()
         .min(3, 'O código de segurança deve ter pelo menos 3 caracteres')
         .typeError('O campo é obrigatório')
         .integer('O campo é obrigatório')
         .required('O campo é obrigatório'),
-      expiredMonth: Yup.number()
+      month: Yup.number()
         .required('O campo é obrigatório')
         .typeError('O campo é obrigatório')
         .min(1, 'O mês de vencimento deve ser um número de 1 a 12')
         .max(12, 'O mês de vencimento deve ser um número de 1 a 12')
         .integer('O campo é obrigatório'),
-      expiredYear: Yup.number()
-        .min(24, 'Ano inválido')
+      year: Yup.number()
+        .min(2024, 'Ano inválido')
         .typeError('O campo é obrigatório')
         .required('O campo é obrigatório')
         .integer('O campo é obrigatório')
     }),
     onSubmit: async (values) => {
+      const { code, month, name, number, year } = values
       try {
-        dispatch(formPayment(values))
         await purchase({
-          // Espera até que a chamada de compra seja concluída
           delivery: delivery,
-          payment: payment,
-          product: product
+          payment: {
+            card: {
+              code: Number(code),
+              name,
+              number,
+              expires: {
+                month: Number(month),
+                year: Number(year)
+              }
+            }
+          },
+          products: items.map((item) => ({
+            id: item.id,
+            price: item.preco
+          }))
         })
-        onClickNext && onClickNext() // Executa a próxima etapa após todas as operações serem concluídas
+        onClickNext && onClickNext()
       } catch (error) {
-        console.error('Erro ao realizar o pagamento ou a compra:', error)
-        // Lida com qualquer erro que ocorra durante o dispatch ou a compra
+        console.error('Erro ao realizar o pedido', error)
       }
     }
   })
@@ -91,75 +94,71 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
     <Form>
       <h4>Pagamento - Valor a pagar {formatPrice(getTotalPrice())}</h4>
       <InputGroup>
-        <label htmlFor="cardName">Nome no cartão</label>
+        <label htmlFor="name">Nome no cartão</label>
         <input
-          id="cardName"
+          id="name"
           type="text"
-          name="cardName"
+          name="name"
           onChange={form.handleChange}
           onBlur={form.handleBlur}
-          value={form.values.cardName}
+          value={form.values.name}
         />
-        <small>{getErrorMessage('cardName', form.errors.cardName)}</small>
+        <small>{getErrorMessage('name', form.errors.name)}</small>
       </InputGroup>
       <Wrapper>
         <InputGroup style={{ width: '228px' }}>
-          <label htmlFor="cardNumber">Número do cartão</label>
+          <label htmlFor="number">Número do cartão</label>
           <InputMask
-            id="cardNumber"
+            id="number"
             type="text"
-            name="cardNumber"
+            name="number"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
-            value={form.values.cardNumber}
+            value={form.values.number}
             mask="9999 9999 9999 9999"
           />
-          <small>{getErrorMessage('cardNumber', form.errors.cardNumber)}</small>
+          <small>{getErrorMessage('number', form.errors.number)}</small>
         </InputGroup>
         <InputGroup style={{ width: '86px' }}>
-          <label htmlFor="cvv">CVV</label>
+          <label htmlFor="code">CVV</label>
           <InputMask
-            id="cvv"
+            id="code"
             type="string"
-            name="cvv"
+            name="code"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
-            value={form.values.cvv}
+            value={form.values.code}
             mask="999"
           />
-          <small>{getErrorMessage('city', form.errors.cvv)}</small>
+          <small>{getErrorMessage('code', form.errors.code)}</small>
         </InputGroup>
       </Wrapper>
       <Wrapper style={{ marginBottom: '24px' }}>
         <InputGroup style={{ width: '155px' }}>
-          <label htmlFor="expiredMonth">Mês de vencimento</label>
+          <label htmlFor="month">Mês de vencimento</label>
           <InputMask
-            id="expiredMonth"
+            id="month"
             type="string"
-            name="expiredMonth"
+            name="month"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
-            value={form.values.expiredMonth}
+            value={form.values.month}
             mask="99"
           />
-          <small>
-            {getErrorMessage('expiredMonth', form.errors.expiredMonth)}
-          </small>
+          <small>{getErrorMessage('month', form.errors.month)}</small>
         </InputGroup>
         <InputGroup style={{ width: '155px' }}>
-          <label htmlFor="expiredYear">Ano de vencimento</label>
+          <label htmlFor="year">Ano de vencimento</label>
           <InputMask
-            id="expiredYear"
+            id="year"
             type="string"
-            name="expiredYear"
+            name="year"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
-            value={form.values.expiredYear}
-            mask="99"
+            value={form.values.year}
+            mask="9999"
           />
-          <small>
-            {getErrorMessage('expiredYear', form.errors.expiredYear)}
-          </small>
+          <small>{getErrorMessage('year', form.errors.year)}</small>
         </InputGroup>
       </Wrapper>
       <Button
