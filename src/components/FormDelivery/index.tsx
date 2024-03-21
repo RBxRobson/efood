@@ -14,9 +14,9 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
   const form = useFormik({
     initialValues: {
       receiver: '',
-      address: '',
+      description: '',
       city: '',
-      cep: '',
+      zipCode: '',
       number: '',
       complement: ''
     },
@@ -24,16 +24,16 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
       receiver: Yup.string()
         .min(3, 'O nome precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
-      address: Yup.string()
+      description: Yup.string()
         .min(5, 'O endereço precisa ter pelo menos 5 caracteres')
         .required('O campo é obrigatório'),
       city: Yup.string()
         .min(3, 'O nome da cidade precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
-      cep: Yup.string()
+      zipCode: Yup.string()
         .min(8, 'O CEP precisa ter pelo menos 8 caracteres')
         .required('O campo é obrigatório'),
-      number: Yup.number()
+      number: Yup.string()
         .min(2, 'O número precisa ter pelo menos 2 caracteres')
         .required('O campo é obrigatório'),
       complement: Yup.string().min(
@@ -42,7 +42,22 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
       )
     }),
     onSubmit: (values) => {
-      dispatch(formDelivery(values))
+      const { description, city, complement, number, receiver, zipCode } =
+        values
+      dispatch(
+        formDelivery({
+          delivery: {
+            receiver,
+            address: {
+              city,
+              description,
+              number: Number(number),
+              zipCode,
+              complement
+            }
+          }
+        })
+      )
       onClickNext && onClickNext()
     }
   })
@@ -72,16 +87,16 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
         <small>{getErrorMessage('receiver', form.errors.receiver)}</small>
       </InputGroup>
       <InputGroup>
-        <label htmlFor="address">Endereço</label>
+        <label htmlFor="description">Endereço</label>
         <input
-          id="address"
+          id="description"
           type="text"
-          name="address"
+          name="description"
           onChange={form.handleChange}
           onBlur={form.handleBlur}
-          value={form.values.address}
+          value={form.values.description}
         />
-        <small>{getErrorMessage('address', form.errors.address)}</small>
+        <small>{getErrorMessage('description', form.errors.description)}</small>
       </InputGroup>
       <InputGroup>
         <label htmlFor="city">Cidade</label>
@@ -97,17 +112,17 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
       </InputGroup>
       <Wrapper>
         <InputGroup style={{ width: '155px' }}>
-          <label htmlFor="cep">CEP</label>
+          <label htmlFor="zipCode">CEP</label>
           <InputMask
-            id="cep"
+            id="zipCode"
             type="text"
-            name="cep"
+            name="zipCode"
             onChange={form.handleChange}
             onBlur={form.handleBlur}
-            value={form.values.cep}
+            value={form.values.zipCode}
             mask="99999-999"
           />
-          <small>{getErrorMessage('cep', form.errors.cep)}</small>
+          <small>{getErrorMessage('zipCode', form.errors.zipCode)}</small>
         </InputGroup>
         <InputGroup style={{ width: '155px' }}>
           <label htmlFor="number">Número</label>
