@@ -24,7 +24,6 @@ type Product = {
 }
 
 declare type PurchasePayload = {
-  product: Product[]
   delivery: {
     receiver: string
     address: {
@@ -46,6 +45,7 @@ declare type PurchasePayload = {
       }
     }
   }
+  products: Product[]
 }
 
 declare type SideBarProps = {
