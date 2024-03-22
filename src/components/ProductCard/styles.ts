@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const CardContainer = styled.li`
   display: flex;
@@ -8,6 +8,10 @@ export const CardContainer = styled.li`
   padding: 8px;
   color: ${colors.hf_color};
   background-color: ${colors.txt_home_color};
+
+  @media (max-width: ${breakpoints.mobile}) {
+    max-width: 300px;
+  }
 
   h3 {
     font-size: 16px;

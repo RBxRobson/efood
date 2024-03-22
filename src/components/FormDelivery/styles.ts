@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const Form = styled.form`
   padding-right: 4px;
@@ -16,7 +16,10 @@ export const Form = styled.form`
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    display: block;
+  }
 `
 
 export const InputGroup = styled.div`

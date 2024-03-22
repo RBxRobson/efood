@@ -135,8 +135,8 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
             />
             <small>{getErrorMessage('name', form.errors.name)}</small>
           </InputGroup>
-          <Wrapper>
-            <InputGroup style={{ width: '228px' }}>
+          <Wrapper style={{ gap: '30px' }}>
+            <InputGroup className="card-number">
               <label htmlFor="number">Número do cartão</label>
               <InputMask
                 id="number"
@@ -149,7 +149,7 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
               />
               <small>{getErrorMessage('number', form.errors.number)}</small>
             </InputGroup>
-            <InputGroup style={{ width: '86px' }}>
+            <InputGroup className="card-code">
               <label htmlFor="code">CVV</label>
               <InputMask
                 id="code"
@@ -163,8 +163,8 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
               <small>{getErrorMessage('code', form.errors.code)}</small>
             </InputGroup>
           </Wrapper>
-          <Wrapper style={{ marginBottom: '24px' }}>
-            <InputGroup style={{ width: '155px' }}>
+          <Wrapper style={{ marginBottom: '24px', gap: '34px' }}>
+            <InputGroup>
               <label htmlFor="month">Mês de vencimento</label>
               <InputMask
                 id="month"
@@ -177,7 +177,7 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
               />
               <small>{getErrorMessage('month', form.errors.month)}</small>
             </InputGroup>
-            <InputGroup style={{ width: '155px' }}>
+            <InputGroup>
               <label htmlFor="year">Ano de vencimento</label>
               <InputMask
                 id="year"

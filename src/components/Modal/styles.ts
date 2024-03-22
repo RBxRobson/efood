@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const Modal = styled.div`
   position: fixed;
@@ -26,6 +26,16 @@ export const ModalContent = styled.div`
   width: 100%;
   height: 346px;
   background-color: ${colors.txt_home_color};
+
+  @media (max-width: ${breakpoints.tablet}) {
+    display: block;
+    height: auto;
+    padding: 32px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 26px;
+  }
 
   div {
     display: flex;
@@ -59,6 +69,11 @@ export const FoodImg = styled.img`
   width: 280px;
   height: 280px;
   object-fit: cover;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+    padding-bottom: 16px;
+  }
 `
 
 export const Icon = styled.img`

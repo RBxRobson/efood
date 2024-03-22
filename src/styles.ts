@@ -8,6 +8,12 @@ export const colors = {
   black_default: '#4B4B4B'
 }
 
+export const breakpoints = {
+  desktop: '1024px',
+  tablet: '768px',
+  mobile: '576px'
+}
+
 export const GlobalStyles = createGlobalStyle`
   *{
     margin: 0;
@@ -26,6 +32,18 @@ export const GlobalStyles = createGlobalStyle`
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
+
+    @media (max-width: ${breakpoints.desktop}) {
+      max-width: ${breakpoints.tablet}
+    }
+
+    @media (max-width: ${breakpoints.tablet}) {
+      max-width: ${breakpoints.mobile}
+    }
+
+    @media (max-width: ${breakpoints.mobile}) {
+      max-width: 96%;
+    }
   }
 
   .overlay {

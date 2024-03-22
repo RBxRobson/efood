@@ -54,7 +54,7 @@ const Cart = ({ onClickNext }: SideBarProps) => {
       <Btn
         title="Clique aqui para continuar com a entrega"
         type="button"
-        style={{ marginRight: '4px' }}
+        style={{ width: '99%' }}
         onClick={onClickNext}
       >
         Continuar com a entrega

@@ -110,8 +110,8 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
         />
         <small>{getErrorMessage('city', form.errors.city)}</small>
       </InputGroup>
-      <Wrapper>
-        <InputGroup style={{ width: '155px' }}>
+      <Wrapper style={{ gap: '34px' }}>
+        <InputGroup>
           <label htmlFor="zipCode">CEP</label>
           <InputMask
             id="zipCode"
@@ -124,7 +124,7 @@ const FormDelivery = ({ onClickBack, onClickNext }: SideBarProps) => {
           />
           <small>{getErrorMessage('zipCode', form.errors.zipCode)}</small>
         </InputGroup>
-        <InputGroup style={{ width: '155px' }}>
+        <InputGroup>
           <label htmlFor="number">Número</label>
           <InputMask
             id="number"

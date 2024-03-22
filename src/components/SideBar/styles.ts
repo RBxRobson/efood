@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const CartContainer = styled.div`
   display: none;
@@ -7,6 +7,12 @@ export const CartContainer = styled.div`
 
   &.is-open {
     display: flex;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    .overlay {
+      display: none;
+    }
   }
 `
 
@@ -20,4 +26,10 @@ export const SideBar = styled.aside`
   padding-bottom: 0;
   background-color: ${colors.txt_home_color};
   color: ${colors.hf_color};
+
+  @media (max-width: ${breakpoints.mobile}) {
+    top: 120px;
+    width: 100%;
+    z-index: 1;
+  }
 `

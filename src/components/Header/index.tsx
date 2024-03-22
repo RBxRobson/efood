@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import logo from '../../assets/images/logo.png'
 
-import { openCart } from '../../redux/reducers/cart'
+import { closeCart, openCart } from '../../redux/reducers/cart'
 import { RootReducer } from '../../redux'
 
 import * as S from './styles'
@@ -15,13 +15,15 @@ export type Props = {
 
 const Header = ({ model }: Props) => {
   const dispatch = useDispatch()
-  const { items } = useSelector((state: RootReducer) => state.cart)
+  const { items, isOpenCart } = useSelector((state: RootReducer) => state.cart)
 
   const open = () => {
-    if (items.length > 0) {
+    if (items.length > 0 && !isOpenCart) {
       dispatch(openCart())
-    } else {
+    } else if (items.length < 0) {
       alert('O carrinho está vazio')
+    } else if (isOpenCart) {
+      dispatch(closeCart())
     }
   }
 
