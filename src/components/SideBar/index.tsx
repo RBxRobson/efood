@@ -7,18 +7,15 @@ import { RootReducer } from '../../redux'
 import FormDelivery from '../FormDelivery'
 import FormPayment from '../FormPayment'
 import Cart from '../Cart'
-import OrderPlaced from '../OrderPlaced'
-import { usePurchaseMutation } from '../../services/api'
 
 import * as S from './styles'
 
-type SideBarState = 'cart' | 'delivery' | 'payment' | 'order placed'
+type SideBarState = 'cart' | 'delivery' | 'payment'
 
 const SideBar = () => {
   const dispatch = useDispatch()
   const { isOpenCart } = useSelector((state: RootReducer) => state.cart)
   const [sideBarState, setSideBarState] = useState<SideBarState>('cart')
-  const [purchase, { data, isSuccess }] = usePurchaseMutation()
 
   const close = () => {
     dispatch(closeCart())
@@ -50,11 +47,8 @@ const SideBar = () => {
         {sideBarState === 'payment' && (
           <FormPayment
             onClickBack={() => setState('delivery')}
-            onClickNext={() => setState('order placed')}
+            onClickNext={orderCompleted}
           />
-        )}
-        {sideBarState === 'order placed' && isSuccess && data && (
-          <OrderPlaced onClickBack={orderCompleted} orderId={data.orderId} />
         )}
       </S.SideBar>
     </S.CartContainer>
