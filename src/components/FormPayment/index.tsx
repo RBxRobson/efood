@@ -9,11 +9,12 @@ import { formatPrice } from '../Modal'
 import { usePurchaseMutation } from '../../services/api'
 
 import Button from '../Button'
+import { OrderContainer } from './styles'
 
 const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
   const { items } = useSelector((state: RootReducer) => state.cart)
   const { delivery } = useSelector((state: RootReducer) => state.form)
-  const [purchase, { data }] = usePurchaseMutation()
+  const [purchase, { data, isSuccess }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -68,7 +69,6 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
             price: item.preco
           }))
         })
-        onClickNext && onClickNext()
       } catch (error) {
         console.error('Erro ao realizar o pedido', error)
       }
@@ -92,90 +92,122 @@ const FormPayment = ({ onClickBack, onClickNext }: SideBarProps) => {
 
   return (
     <Form>
-      <h4>Pagamento - Valor a pagar {formatPrice(getTotalPrice())}</h4>
-      <InputGroup>
-        <label htmlFor="name">Nome no cartão</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          onChange={form.handleChange}
-          onBlur={form.handleBlur}
-          value={form.values.name}
-        />
-        <small>{getErrorMessage('name', form.errors.name)}</small>
-      </InputGroup>
-      <Wrapper>
-        <InputGroup style={{ width: '228px' }}>
-          <label htmlFor="number">Número do cartão</label>
-          <InputMask
-            id="number"
-            type="text"
-            name="number"
-            onChange={form.handleChange}
-            onBlur={form.handleBlur}
-            value={form.values.number}
-            mask="9999 9999 9999 9999"
-          />
-          <small>{getErrorMessage('number', form.errors.number)}</small>
-        </InputGroup>
-        <InputGroup style={{ width: '86px' }}>
-          <label htmlFor="code">CVV</label>
-          <InputMask
-            id="code"
-            type="string"
-            name="code"
-            onChange={form.handleChange}
-            onBlur={form.handleBlur}
-            value={form.values.code}
-            mask="999"
-          />
-          <small>{getErrorMessage('code', form.errors.code)}</small>
-        </InputGroup>
-      </Wrapper>
-      <Wrapper style={{ marginBottom: '24px' }}>
-        <InputGroup style={{ width: '155px' }}>
-          <label htmlFor="month">Mês de vencimento</label>
-          <InputMask
-            id="month"
-            type="string"
-            name="month"
-            onChange={form.handleChange}
-            onBlur={form.handleBlur}
-            value={form.values.month}
-            mask="99"
-          />
-          <small>{getErrorMessage('month', form.errors.month)}</small>
-        </InputGroup>
-        <InputGroup style={{ width: '155px' }}>
-          <label htmlFor="year">Ano de vencimento</label>
-          <InputMask
-            id="year"
-            type="string"
-            name="year"
-            onChange={form.handleChange}
-            onBlur={form.handleBlur}
-            value={form.values.year}
-            mask="9999"
-          />
-          <small>{getErrorMessage('year', form.errors.year)}</small>
-        </InputGroup>
-      </Wrapper>
-      <Button
-        style={{ marginBottom: '8px' }}
-        type="submit"
-        title="Clique aqui para continuar com o pagamento"
-        onClick={form.handleSubmit}
-      >
-        Finalizar pagamento
-      </Button>
-      <Button
-        title="Clique aqui para voltar ao carrinho"
-        type="button"
-        onClick={() => onClickBack && onClickBack()}
-      >
-        Voltar para edição de endereço
-      </Button>
+      {isSuccess && data ? (
+        <OrderContainer>
+          <h3>Pedido Realizado - ID {data.orderId}</h3>
+          <p>
+            Estamos felizes em informar que seu pedido já está em processo de
+            preparação e, em breve, será entregue no endereço fornecido.
+            <br />
+            <br />
+            Gostaríamos de ressaltar que nossos entregadores não estão
+            autorizados a realizar cobranças extras.
+            <br />
+            <br />
+            Lembre-se da importância de higienizar as mãos após o recebimento do
+            pedido, garantindo assim sua segurança e bem-estar durante a
+            refeição.
+            <br />
+            <br />
+            Esperamos que desfrute de uma deliciosa e agradável experiência
+            gastronômica. Bom apetite!
+          </p>
+          <Button
+            type="button"
+            title="Concluir"
+            onClick={() => onClickNext && onClickNext()}
+          >
+            Concluir
+          </Button>
+        </OrderContainer>
+      ) : (
+        <>
+          <h4>Pagamento - Valor a pagar {formatPrice(getTotalPrice())}</h4>
+          <InputGroup>
+            <label htmlFor="name">Nome no cartão</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              onChange={form.handleChange}
+              onBlur={form.handleBlur}
+              value={form.values.name}
+            />
+            <small>{getErrorMessage('name', form.errors.name)}</small>
+          </InputGroup>
+          <Wrapper>
+            <InputGroup style={{ width: '228px' }}>
+              <label htmlFor="number">Número do cartão</label>
+              <InputMask
+                id="number"
+                type="text"
+                name="number"
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                value={form.values.number}
+                mask="9999 9999 9999 9999"
+              />
+              <small>{getErrorMessage('number', form.errors.number)}</small>
+            </InputGroup>
+            <InputGroup style={{ width: '86px' }}>
+              <label htmlFor="code">CVV</label>
+              <InputMask
+                id="code"
+                type="string"
+                name="code"
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                value={form.values.code}
+                mask="999"
+              />
+              <small>{getErrorMessage('code', form.errors.code)}</small>
+            </InputGroup>
+          </Wrapper>
+          <Wrapper style={{ marginBottom: '24px' }}>
+            <InputGroup style={{ width: '155px' }}>
+              <label htmlFor="month">Mês de vencimento</label>
+              <InputMask
+                id="month"
+                type="string"
+                name="month"
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                value={form.values.month}
+                mask="99"
+              />
+              <small>{getErrorMessage('month', form.errors.month)}</small>
+            </InputGroup>
+            <InputGroup style={{ width: '155px' }}>
+              <label htmlFor="year">Ano de vencimento</label>
+              <InputMask
+                id="year"
+                type="string"
+                name="year"
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                value={form.values.year}
+                mask="9999"
+              />
+              <small>{getErrorMessage('year', form.errors.year)}</small>
+            </InputGroup>
+          </Wrapper>
+          <Button
+            style={{ marginBottom: '8px' }}
+            type="submit"
+            title="Clique aqui para continuar com o pagamento"
+            onClick={form.handleSubmit}
+          >
+            Finalizar pagamento
+          </Button>
+          <Button
+            title="Clique aqui para voltar ao carrinho"
+            type="button"
+            onClick={() => onClickBack && onClickBack()}
+          >
+            Voltar para edição de endereço
+          </Button>
+        </>
+      )}
     </Form>
   )
 }
